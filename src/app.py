@@ -1,39 +1,42 @@
-from openai import OpenAI
+# src/app.py
 import streamlit as st
-from pinecone import Pinecone, ServerlessSpec
-#source venv/bin/activate
+from chatlogic import ChatLogic
 
-st.title("ChatGPT-like clone")
+st.title("I-sektionen Chatbot (RAG)")
 
-pc = Pinecone(st.secrets["PINECONE_API_KEY"])
+# --- Setup ChatLogic with secrets
+logic = ChatLogic(
+    openai_key=st.secrets["OPENAI_API_KEY"],
+    pinecone_key=st.secrets["PINECONE_API_KEY"],
+    index_name="isektionen-rag-1536"
+)
 
-
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# --- Streamlit session state
+if "messages" not in st.session_state:
+    st.session_state["messages"] = []
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
+    logic.model = st.session_state["openai_model"]
 
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
+# --- Render history
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-
-if prompt := st.chat_input("What is up?"):
+# --- Handle new prompt
+if prompt := st.chat_input("Vad vill du veta om dokumenten?"):
+    # Append user message
     st.session_state.messages.append({"role": "user", "content": prompt})
+
+    # Show user message
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    # Generate assistant response (stream)
     with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
+        stream = logic.generate_response(st.session_state.messages, prompt)
         response = st.write_stream(stream)
+
+    # Save assistant reply in session
     st.session_state.messages.append({"role": "assistant", "content": response})
