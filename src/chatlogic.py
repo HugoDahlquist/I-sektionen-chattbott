@@ -9,7 +9,7 @@ class ChatLogic:
         self.client = OpenAI(api_key=openai_key)
         self.pc = Pinecone(api_key=pinecone_key)
         self.index = self.pc.Index(index_name)
-        self.model = "gpt-3.5-turbo"  # default, can be overridden
+        self.model = "gpt-5-mini"  # default, can be overridden
 
     # --- Embeddings
     def get_embedding(self, text: str):
