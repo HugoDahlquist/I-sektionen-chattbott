@@ -1,7 +1,12 @@
 from openai import OpenAI
 import streamlit as st
+from pinecone import Pinecone, ServerlessSpec
+#source venv/bin/activate
 
 st.title("ChatGPT-like clone")
+
+pc = Pinecone(st.secrets["PINECONE_API_KEY"])
+
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
@@ -14,6 +19,7 @@ if "messages" not in st.session_state:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
 
 if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
