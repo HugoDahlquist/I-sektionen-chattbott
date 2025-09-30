@@ -84,5 +84,5 @@ def load_pdf_into_pinecone(pdf_path: str):
 # Körning
 # ========================
 if __name__ == "__main__":
-    pdf_file = "Problematiseringsartikel 5.pdf"
+    pdf_file = "SammanfattningMaggie.pdf"
     load_pdf_into_pinecone(pdf_file)

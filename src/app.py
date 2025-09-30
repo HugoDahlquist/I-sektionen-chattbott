@@ -2,7 +2,9 @@
 import streamlit as st
 from chatlogic import ChatLogic
 
-st.title("I-sektionen Chatbot (RAG)")
+#source venv/bin/activate
+
+st.title("I-sektionen Chatbot med (RAG)")
 
 # --- Setup ChatLogic with secrets
 logic = ChatLogic(
