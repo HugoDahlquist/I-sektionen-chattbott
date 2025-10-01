@@ -5,6 +5,8 @@ from chatlogic import ChatLogic
 #source venv/bin/activate
 
 st.title("I-sektionen Chatbot med (RAG)")
+#change the url and icon
+st.set_page_config(page_title="I-sektionen Chatbot", page_icon="💚")
 
 # --- Setup ChatLogic with secrets
 logic = ChatLogic(
