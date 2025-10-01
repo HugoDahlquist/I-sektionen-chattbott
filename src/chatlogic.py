@@ -20,10 +20,11 @@ class ChatLogic:
         return resp.data[0].embedding
 
     # --- Pinecone retrieval
-    def retrieve_context(self, query: str, top_k: int = 5) -> str:
+    def retrieve_context(self, query: str, course: str, top_k: int = 5) -> str:
         query_vec = self.get_embedding(query)
+        #options = {"namespace": "TDEI76"}  # specify namespace if needed
         results = self.index.query(
-            vector=query_vec, top_k=top_k, include_metadata=True
+            vector=query_vec, top_k=top_k, include_metadata=True, namespace=course
         )
         if not results.matches:
             return ""
@@ -35,8 +36,8 @@ class ChatLogic:
         return "\n\n".join(context_chunks)
 
     # --- Generate response with context + history
-    def generate_response(self, messages: list[dict], query: str, top_k: int = 5):
-        context = self.retrieve_context(query, top_k=top_k)
+    def generate_response(self, messages: list[dict], query: str, course: str, top_k: int = 5):
+        context = self.retrieve_context(query, top_k=top_k, course=course)
 
         system_prompt = (
             "You are a digital teacher for the I-sektionen knowledge base. "

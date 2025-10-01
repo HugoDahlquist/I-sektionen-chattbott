@@ -15,6 +15,11 @@ logic = ChatLogic(
     index_name="isektionen-rag-1536"
 )
 
+#the user can select the course from a dropdown menu
+course = st.selectbox(
+    "Välj kurs:",
+    ("TDEI76", "TDEI75"))
+
 # --- Streamlit session state
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
@@ -39,7 +44,7 @@ if prompt := st.chat_input("Vad vill du veta om dokumenten?"):
 
     # Generate assistant response (stream)
     with st.chat_message("assistant"):
-        stream = logic.generate_response(st.session_state.messages, prompt)
+        stream = logic.generate_response(st.session_state.messages, prompt, course)
         response = st.write_stream(stream)
 
     # Save assistant reply in session
