@@ -85,7 +85,7 @@ def load_pdf_into_pinecone(pdf_path: str):
 # Körning
 # ========================
 if __name__ == "__main__":
-    pdf_file = "huffcarlberg.pdf"
-    file2 = "HUFF.pdf"
+    pdf_file = "huff3.pdf"
+    file2 = "huff4.pdf"
     load_pdf_into_pinecone(pdf_file)
-   # load_pdf_into_pinecone(file2)
+    load_pdf_into_pinecone(file2)

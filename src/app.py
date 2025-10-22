@@ -4,11 +4,16 @@ from chatlogic import ChatLogic
 
 #source venv/bin/activate
 
-st.title("I-sektionen Chatbot med (RAG)")
+st.title("I-sektionen Chattbott med (RAG)")
+st.markdown("""
+Denna chattbot är tränad på dokument från I-sektionen och kan hjälpa dig med frågor relaterade till kurserna TDEI76 och TKMJ51. Den använder OpenAI för att generera svar baserat på innehållet i dokumenten. Dokumenten är diverse föreläsningsanteckningar, labbinstruktioner och artiklar kopplade till kurserna. 
+            Den har bara tillgång till information som finns i dessa dokument, så om du frågar om något som inte täcks där, kommer den att meddela att det inte finns i materialet istället för att hitta på ett svar. Du kan just nu bara ställa frågor om en kurs i taget, välj kursen i dropdown-menyn ovanför chattfönstret.
+""")
 #change the url and icon
 st.set_page_config(page_title="I-sektionen Chatbot", page_icon="💚")
 
 # --- Setup ChatLogic with secrets
+# app.py
 logic = ChatLogic(
     openai_key=st.secrets["OPENAI_API_KEY"],
     pinecone_key=st.secrets["PINECONE_API_KEY"],
@@ -24,9 +29,6 @@ course = st.selectbox(
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
-    logic.model = st.session_state["openai_model"]
 
 # --- Render history
 for message in st.session_state.messages:
@@ -34,7 +36,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # --- Handle new prompt
-if prompt := st.chat_input("Vad vill du veta om dokumenten?"):
+if prompt := st.chat_input("Vad vill du veta om kursen?"):
     # Append user message
     st.session_state.messages.append({"role": "user", "content": prompt})
 
