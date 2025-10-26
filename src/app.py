@@ -6,8 +6,8 @@ from chatlogic import ChatLogic
 
 st.title("I-sektionen Chattbott med (RAG)")
 st.markdown("""
-Denna chattbot är tränad på dokument från I-sektionen och kan hjälpa dig med frågor relaterade till kurserna TDEI76 och TKMJ51. Den använder OpenAI för att generera svar baserat på innehållet i dokumenten. Dokumenten är diverse föreläsningsanteckningar, labbinstruktioner och artiklar kopplade till kurserna. 
-            Den har bara tillgång till information som finns i dessa dokument, så om du frågar om något som inte täcks där, kommer den att meddela att det inte finns i materialet istället för att hitta på ett svar. Du kan just nu bara ställa frågor om en kurs i taget, välj kursen i dropdown-menyn ovanför chattfönstret.
+Denna chattbot har tillgång till dokument från kurser som ges på programmet Industriell ekononomi vid LiU och kan just nu hjälpa dig med frågor relaterade till kurserna TDEI76, TPPE98 och TKMJ51. Den använder ChatGPT för att generera svar baserat på innehållet i dokumenten. Dokumenten är diverse föreläsningsanteckningar, labbinstruktioner och artiklar kopplade till kurserna. 
+            Den har bara tillgång till information som finns i dessa dokument, så om du frågar om något som inte täcks där, kommer den att meddela att det inte finns i materialet istället för att hitta på ett svar. Du kan just nu bara ställa frågor om en kurs i taget, välj kursen i dropdown-menyn nedan.
 """)
 #change the url and icon
 st.set_page_config(page_title="I-sektionen Chatbot", page_icon="💚")
@@ -23,7 +23,7 @@ logic = ChatLogic(
 #the user can select the course from a dropdown menu
 course = st.selectbox(
     "Välj kurs:",
-    ("TKMJ51", "TDEI76", "TDEI75" ))
+    ("TKMJ51", "TPPE98", "TDEI76", "TDEI75" ))
 
 # --- Streamlit session state
 if "messages" not in st.session_state:
