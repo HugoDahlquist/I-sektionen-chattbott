@@ -78,14 +78,14 @@ def load_pdf_into_pinecone(pdf_path: str):
 
         })
 
-    index.upsert(vectors=vectors, namespace="TPPE98")
+    index.upsert(vectors=vectors, namespace="TEIE72")
     print(f"Laddade upp {len(chunks)} chunks från {pdf_path} till Pinecone!")
 
 # ========================
 # Körning
 # ========================
 if __name__ == "__main__":
-    pdf_file = "TPPE98GPT.pdf"
+    pdf_file = "TEIE72gpt.pdf"
   #  file2 = "huff4.pdf"
     load_pdf_into_pinecone(pdf_file)
     #load_pdf_into_pinecone(file2)

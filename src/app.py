@@ -23,7 +23,7 @@ logic = ChatLogic(
 #the user can select the course from a dropdown menu
 course = st.selectbox(
     "Välj kurs:",
-    ("TKMJ51", "TPPE98", "TDEI76", "TDEI75" ))
+    ("TKMJ51", "TPPE98", "TDEI76", "TDEI75", "TEIE72" ))
 
 # --- Streamlit session state
 if "messages" not in st.session_state:
