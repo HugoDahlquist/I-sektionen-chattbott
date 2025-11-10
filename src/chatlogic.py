@@ -50,12 +50,14 @@ class ChatLogic:
             "Encourage understanding by explaining not only *what* the answer is, but also *why*. "
             "When useful, ask guiding follow-up questions to help the student learn more. "
             "Keep a supportive, motivating tone at all times.\n\n"
-            f"Context:\n{context}"
+            f"Context for the question:\n{context}"
         )
 
         # Build full conversation (prepend system + history)
-        full_messages = [{"role": "system", "content": system_prompt}] + messages
-
+        full_messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"The student's question: {query}"},
+        ] + messages
         # Stream response back
         return self.client.chat.completions.create(
             model=self.model, messages=full_messages, stream=True
